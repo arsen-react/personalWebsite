@@ -1,0 +1,28 @@
+.section {
+  padding: var(--section-gap) 0;
+  position: relative;
+}
+
+.tinted {
+  background: var(--gradient-section);
+}
+
+.centered {
+  text-align: center;
+}
+
+.container {
+  width: var(--container-width);
+  margin: 0 auto;
+}
+
+.narrow {
+  width: var(--container-narrow);
+  margin: 0 auto;
+}
+
+@media print {
+  .section {
+    padding: 32px 0;
+  }
+}

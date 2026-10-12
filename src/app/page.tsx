@@ -1,27 +1,31 @@
-import { About } from "@/components/About";
-import { Contact } from "@/components/Contact";
-import { Education } from "@/components/Education";
-import { Experience } from "@/components/Experience";
-import { Footer } from "@/components/Footer";
-import { Hero } from "@/components/Hero";
-import { Nav } from "@/components/Nav";
-import { Projects } from "@/components/Projects";
-import { Skills } from "@/components/Skills";
+import { sections } from "@/config/navigation";
+import { fullName, siteConfig } from "@/config/site";
+import { AboutSection } from "@/features/about";
+import { ContactSection } from "@/features/contact";
+import { EducationSection } from "@/features/education";
+import { ExperienceSection } from "@/features/experience";
+import { HeroSection } from "@/features/hero";
+import { SiteHeader } from "@/features/navigation";
+import { ProjectsSection } from "@/features/projects";
+import { SkillsSection } from "@/features/skills";
+import { ThemeToggle } from "@/features/theme";
+import { Footer } from "@/shared/ui/organisms";
+import { PageLayout } from "@/shared/ui/templates";
 
-export default function Home() {
+/** Composition root: wires the features into the page layout. Sections follow the nav order. */
+export default function HomePage() {
   return (
-    <>
-      <Nav />
-      <main>
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Skills />
-        <Education />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <PageLayout
+      header={<SiteHeader brand={siteConfig.brand} items={sections} actions={<ThemeToggle />} />}
+      footer={<Footer name={fullName} city={siteConfig.person.city} />}
+    >
+      <HeroSection />
+      <AboutSection />
+      <ExperienceSection />
+      <ProjectsSection />
+      <SkillsSection />
+      <EducationSection />
+      <ContactSection />
+    </PageLayout>
   );
 }

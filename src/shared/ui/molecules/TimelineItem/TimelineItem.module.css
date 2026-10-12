@@ -1,0 +1,45 @@
+.item {
+  margin-bottom: 36px;
+  position: relative;
+}
+
+.item:last-child {
+  margin-bottom: 0;
+}
+
+.item::before {
+  content: "";
+  position: absolute;
+  left: -36px;
+  top: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--bg-primary);
+  transition: background 0.3s;
+}
+
+.item:hover::before {
+  background: var(--accent);
+}
+
+.period {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-dim);
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  font-weight: 300;
+}

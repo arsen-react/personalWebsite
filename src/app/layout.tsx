@@ -1,50 +1,54 @@
-import type { Metadata } from "next";
-import { Instrument_Serif, JetBrains_Mono, Manrope } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { CursorGlow } from "@/components/CursorGlow";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { profile } from "@/content/profile";
-import { themeInitScript } from "@/lib/theme";
-import "./globals.css";
+import { fullName, siteConfig } from "@/config/site";
+import { ThemeScript } from "@/features/theme";
+import { CursorGlow, ScrollReveal } from "@/shared/effects";
+import { fontVariables } from "./fonts";
+import { personStructuredData, toJsonScript } from "./structured-data";
+import "@/styles/tokens.css";
+import "@/styles/base.css";
+import "@/styles/utilities.css";
 
-// Self-hosted by next/font; globals.css reads them through these CSS variables.
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-manrope",
-  display: "swap",
-});
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
-  display: "swap",
-});
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
+const title = `${fullName} — ${siteConfig.person.role}`;
 
 export const metadata: Metadata = {
-  title: `${profile.firstName} ${profile.lastName} — ${profile.role}`,
-  description: profile.description,
+  metadataBase: new URL(siteConfig.url),
+  title: { default: title, template: `%s — ${fullName}` },
+  description: siteConfig.description,
+  applicationName: siteConfig.brand,
+  authors: [{ name: fullName, url: siteConfig.url }],
+  creator: fullName,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "profile",
+    url: "/",
+    siteName: siteConfig.brand,
+    title,
+    description: siteConfig.description,
+    locale: siteConfig.locale,
+    firstName: siteConfig.person.firstName,
+    lastName: siteConfig.person.lastName,
+  },
+  twitter: { card: "summary", title, description: siteConfig.description },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0b0b0f",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${manrope.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
-      // The theme script sets data-theme before React hydrates.
-      suppressHydrationWarning
-    >
+    // ThemeScript sets data-theme on <html> before React hydrates.
+    <html lang="en" className={fontVariables} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <ThemeScript />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: toJsonScript(personStructuredData()) }}
+        />
         <CursorGlow />
         {children}
         <ScrollReveal />

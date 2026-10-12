@@ -2,6 +2,8 @@
 node_modules/
 .next/
 coverage/
+storybook-static/
+*storybook.log
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store

@@ -1,0 +1,28 @@
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.item:hover {
+  border-color: var(--border-hover);
+  transform: translateX(4px);
+}
+
+.name {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.level {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

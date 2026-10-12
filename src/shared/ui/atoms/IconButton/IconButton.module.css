@@ -1,0 +1,24 @@
+.iconButton {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: var(--text-secondary);
+  transition: all 0.3s;
+}
+
+.iconButton:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: rotate(30deg);
+}
+
+@media print {
+  .iconButton {
+    display: none !important;
+  }
+}

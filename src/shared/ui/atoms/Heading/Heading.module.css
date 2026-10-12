@@ -1,0 +1,26 @@
+.section,
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.section {
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 48px;
+}
+
+.display {
+  font-size: clamp(36px, 6vw, 64px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+
+.section em,
+.display em {
+  font-style: italic;
+  color: var(--accent);
+}

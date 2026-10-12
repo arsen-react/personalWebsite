@@ -1,0 +1,250 @@
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(var(--nav-height) + 20px);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-hero);
+  pointer-events: none;
+}
+
+.canvasWrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.canvasWrap canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.content {
+  width: var(--container-width);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+.textCol {
+  position: relative;
+  z-index: 2;
+}
+
+.visualCol {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  pointer-events: none;
+  padding-top: 40px;
+}
+
+.codeSample {
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out-expo) 0.9s forwards;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeIn 0.8s var(--ease-out-expo) 0.2s forwards;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 110px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.name em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.nameLine {
+  overflow: hidden;
+  display: block;
+}
+
+.lineInner {
+  display: block;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: lineRise 1s var(--ease-out-expo) forwards;
+}
+
+.nameLine:nth-child(2) .lineInner {
+  animation-delay: 0.12s;
+}
+
+.tagline {
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 300;
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out-expo) 0.5s forwards;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out-expo) 0.7s forwards;
+}
+
+.scrollHint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeIn 0.8s var(--ease-out-expo) 1.2s forwards;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--accent-dim), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+.scrollText {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+@keyframes lineRise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(0.6);
+    transform-origin: top;
+  }
+}
+
+@media (min-width: 900px) {
+  .hero {
+    justify-content: flex-start;
+    padding-top: calc(var(--nav-height) + 60px);
+  }
+
+  .content {
+    grid-template-columns: 1fr 380px;
+    gap: 40px;
+    align-items: start;
+    padding-top: 40px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .content {
+    grid-template-columns: 1fr 400px;
+    gap: 60px;
+  }
+}
+
+@media (max-width: 899px) {
+  .visualCol {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .canvasWrap {
+    width: 100%;
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .lineInner,
+  .tagline,
+  .actions,
+  .scrollHint,
+  .codeSample {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .scrollHint {
+    transform: translateX(-50%);
+  }
+
+  .scrollLine {
+    animation: none;
+  }
+}
+
+@media print {
+  .scrollHint {
+    display: none !important;
+  }
+}

@@ -1,0 +1,51 @@
+.menuButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  position: relative;
+  z-index: 1001;
+}
+
+.menuButton span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text-primary);
+  margin: 0 auto;
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.menuButton span:nth-child(1) {
+  transform: translateY(-4px);
+}
+
+.menuButton span:nth-child(3) {
+  transform: translateY(4px);
+}
+
+.open span:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .menuButton {
+    display: block;
+  }
+}
+
+@media print {
+  .menuButton {
+    display: none !important;
+  }
+}

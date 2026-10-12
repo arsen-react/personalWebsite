@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://arsen.dev
+Sitemap: https://arsen.dev/sitemap.xml

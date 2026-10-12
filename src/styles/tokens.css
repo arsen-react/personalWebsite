@@ -1,0 +1,77 @@
+/* Design tokens. Dark is the default theme; [data-theme="light"] overrides it. */
+:root {
+  --bg-primary: #0b0b0f;
+  --bg-secondary: #111118;
+  --bg-tertiary: #16161f;
+  --bg-card: #1a1a24;
+  --bg-card-hover: #1e1e2a;
+  --surface-glass: rgba(255, 255, 255, 0.03);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+
+  --text-primary: #e8e6e3;
+  --text-secondary: #8a8a9a;
+  --text-tertiary: #5a5a6e;
+  --text-inverse: #0b0b0f;
+
+  --accent: #d4a04a;
+  --accent-glow: rgba(212, 160, 74, 0.15);
+  --accent-bright: #e8b960;
+  --accent-dim: #a07830;
+
+  --gradient-hero: radial-gradient(
+    ellipse 80% 60% at 50% -10%,
+    rgba(212, 160, 74, 0.08) 0%,
+    transparent 60%
+  );
+  --gradient-section: radial-gradient(
+    ellipse 60% 40% at 80% 0%,
+    rgba(212, 160, 74, 0.04) 0%,
+    transparent 50%
+  );
+
+  /* The --font-* sources are CSS variables set by next/font in the root layout. */
+  --font-display: var(--font-instrument-serif), Georgia, serif;
+  --font-body: var(--font-manrope), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "Fira Code", monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  --nav-height: 64px;
+  --section-gap: clamp(80px, 12vh, 140px);
+  --container-width: min(1200px, 90vw);
+  --container-narrow: min(800px, 90vw);
+}
+
+[data-theme="light"] {
+  --bg-primary: #f5f2ed;
+  --bg-secondary: #ece8e1;
+  --bg-tertiary: #e4dfd7;
+  --bg-card: #ffffff;
+  --bg-card-hover: #faf8f5;
+  --surface-glass: rgba(0, 0, 0, 0.02);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.15);
+
+  --text-primary: #1a1a1f;
+  --text-secondary: #5a5a68;
+  --text-tertiary: #8a8a95;
+  --text-inverse: #f5f2ed;
+
+  --accent: #b8862e;
+  --accent-glow: rgba(184, 134, 46, 0.1);
+  --accent-bright: #d4a04a;
+  --accent-dim: #8a6520;
+
+  --gradient-hero: radial-gradient(
+    ellipse 80% 60% at 50% -10%,
+    rgba(184, 134, 46, 0.06) 0%,
+    transparent 60%
+  );
+  --gradient-section: radial-gradient(
+    ellipse 60% 40% at 80% 0%,
+    rgba(184, 134, 46, 0.03) 0%,
+    transparent 50%
+  );
+}
