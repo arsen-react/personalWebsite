@@ -1,5 +1,6 @@
 ---
+# Copies the committed static export (npm run build -> out/) into the web root.
 deployment:
   tasks:
     - export DEPLOYPATH=/home3/arsen/public_html
-    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp -R out/. $DEPLOYPATH
