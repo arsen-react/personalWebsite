@@ -1,17 +1,10 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach, vi } from "vitest";
+import { MockIntersectionObserver } from "./browser-mocks";
 
 // jsdom has no layout, observers, media queries or canvas; the page only needs them to exist.
-class IntersectionObserverStub {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-  takeRecords() {
-    return [];
-  }
-}
-vi.stubGlobal("IntersectionObserver", IntersectionObserverStub);
+vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
 vi.stubGlobal("matchMedia", (query: string) => ({
   matches: false,
   media: query,
@@ -29,6 +22,9 @@ afterEach(() => {
   cleanup();
   localStorage.clear();
   document.documentElement.removeAttribute("data-theme");
+  document.documentElement.removeAttribute("style");
   document.body.style.overflow = "";
+  MockIntersectionObserver.instances.length = 0;
   vi.restoreAllMocks();
+  vi.useRealTimers();
 });

@@ -37,6 +37,14 @@ describe("Badge", () => {
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
+
+  it("keeps in-page links in the same tab", () => {
+    render(<Badge href="#contact">Contact</Badge>);
+    const link = screen.getByRole("link", { name: "Contact" });
+
+    expect(link).not.toHaveAttribute("target");
+    expect(link).not.toHaveAttribute("rel");
+  });
 });
 
 describe("Icon", () => {

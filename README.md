@@ -56,9 +56,10 @@ Each component has its own CSS Module. Colours for both themes, fonts, easing an
 
 ## Quality
 
-- **Tests:** 69 Vitest and React Testing Library tests next to the code they cover, including an axe accessibility check of the whole page.
+- **Tests:** 93 Vitest and React Testing Library tests next to the code they cover: components, hooks, the hero canvas, the scroll effects, the root layout and SEO metadata, plus an axe accessibility check of the whole page.
+- **Coverage:** enforced by thresholds (95% of statements, functions and lines, 90% of branches).
 - **Storybook:** stories for every atomic level, a dark/light theme switch and the accessibility add-on.
-- **CI:** format check, lint, type check, tests, the static build and the Storybook build on every push.
+- **CI:** format check, lint, type check, tests with coverage (the HTML report is uploaded as an artifact), the static build and the Storybook build on every push.
 
 ## Accessibility and SEO
 
@@ -69,11 +70,12 @@ Each component has its own CSS Module. Colours for both themes, fonts, easing an
 ## Scripts
 
 ```bash
-npm run dev          # dev server
-npm run storybook    # component library on http://localhost:6006
-npm run test         # tests
-npm run check        # format, lint, types, tests and build
-npm run build        # static export to out/
+npm run dev            # dev server
+npm run storybook      # component library on http://localhost:6006
+npm run test           # tests
+npm run test:coverage  # tests with the coverage report and thresholds
+npm run check          # format, lint, types, tests with coverage, and build
+npm run build          # static export to out/
 ```
 
 ## Deploy

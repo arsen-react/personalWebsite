@@ -1,12 +1,27 @@
 import { render } from "@testing-library/react";
 import axe from "axe-core";
-import { describe, expect, it } from "vitest";
+import { renderToStaticMarkup } from "react-dom/server";
+import { describe, expect, it, vi } from "vitest";
 import { sections } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
+import RootLayout, { metadata } from "./layout";
 import HomePage from "./page";
 import robots from "./robots";
 import sitemap from "./sitemap";
 import { personStructuredData, toJsonScript } from "./structured-data";
+
+// next/font only works inside the Next.js compiler.
+vi.mock("./fonts", () => ({ fontVariables: "font-sans font-serif font-mono" }));
+
+const renderDocument = () =>
+  new DOMParser().parseFromString(
+    renderToStaticMarkup(
+      <RootLayout>
+        <main>Page content</main>
+      </RootLayout>,
+    ),
+    "text/html",
+  );
 
 describe("Home page", () => {
   it("renders a section for every navigation link, in the same order", () => {
@@ -60,5 +75,34 @@ describe("SEO", () => {
 
   it("escapes < so the JSON cannot close its script tag", () => {
     expect(toJsonScript({ note: "</script>" })).toBe('{"note":"\\u003c/script>"}');
+  });
+
+  it("sets the canonical URL and the profile card used when the page is shared", () => {
+    expect(String(metadata.metadataBase)).toBe(`${siteConfig.url}/`);
+    expect(metadata.alternates).toEqual({ canonical: "/" });
+    expect(metadata.openGraph).toMatchObject({
+      type: "profile",
+      url: "/",
+      siteName: siteConfig.brand,
+    });
+    expect(metadata.robots).toEqual({ index: true, follow: true });
+  });
+});
+
+describe("Root layout", () => {
+  it("applies the saved theme from <head>, before the page paints", () => {
+    const { documentElement: html, head } = renderDocument();
+
+    expect(html.getAttribute("lang")).toBe("en");
+    expect(html.className).toBe("font-sans font-serif font-mono");
+    expect(head.querySelector("script")?.textContent).toContain("data-theme");
+  });
+
+  it("embeds the schema.org data and renders the page inside <body>", () => {
+    const { body } = renderDocument();
+    const jsonLd = body.querySelector('script[type="application/ld+json"]');
+
+    expect(JSON.parse(jsonLd?.textContent ?? "null")).toEqual(personStructuredData());
+    expect(body.querySelector("main")?.textContent).toBe("Page content");
   });
 });

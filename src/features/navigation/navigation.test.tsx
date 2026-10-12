@@ -1,7 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { MockIntersectionObserver } from "@/test/browser-mocks";
 import { SiteHeader } from "./components/SiteHeader";
+import styles from "./components/SiteHeader.module.css";
 
 const items = [
   { id: "about", label: "About" },
@@ -57,5 +59,38 @@ describe("SiteHeader", () => {
     const menuButton = screen.getByRole("button", { name: "Toggle navigation menu" });
     const list = screen.getByRole("list");
     expect(menuButton).toHaveAttribute("aria-controls", list.id);
+  });
+
+  it("marks the link of the section in view as the current location", () => {
+    render(
+      <>
+        <SiteHeader brand="arsen.dev" items={items} />
+        {items.map(({ id }) => (
+          <section key={id} id={id} />
+        ))}
+      </>,
+    );
+    const [observer] = MockIntersectionObserver.instances;
+    expect(observer.observed.size).toBe(items.length);
+
+    act(() => observer.trigger([document.getElementById("experience") as HTMLElement]));
+    expect(screen.getByRole("link", { name: "Experience" })).toHaveAttribute(
+      "aria-current",
+      "location",
+    );
+    expect(screen.getByRole("link", { name: "About" })).not.toHaveAttribute("aria-current");
+  });
+
+  it("gets its scrolled style once the page scrolls", () => {
+    renderHeader();
+    const header = screen.getByRole("banner");
+    expect(header).not.toHaveClass(styles.scrolled);
+
+    act(() => {
+      Object.defineProperty(window, "scrollY", { value: 120, configurable: true });
+      window.dispatchEvent(new Event("scroll"));
+    });
+    expect(header).toHaveClass(styles.scrolled);
+    Object.defineProperty(window, "scrollY", { value: 0, configurable: true });
   });
 });

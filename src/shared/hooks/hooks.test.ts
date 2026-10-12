@@ -1,14 +1,20 @@
 import { act, renderHook } from "@testing-library/react";
+import { createElement } from "react";
+import { renderToString } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
+import { mockMatchMedia } from "@/test/browser-mocks";
 import { useEscapeKey } from "./useEscapeKey";
 import { useLockBodyScroll } from "./useLockBodyScroll";
-import { useMediaQuery } from "./useMediaQuery";
+import { useMediaQuery, usePrefersReducedMotion } from "./useMediaQuery";
 import { useScrolled } from "./useScrolled";
 
 const pressEscape = () =>
   act(() => {
     document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
   });
+
+const setScrollY = (y: number) =>
+  Object.defineProperty(window, "scrollY", { value: y, configurable: true });
 
 describe("useScrolled", () => {
   it("turns true once the page scrolls past the threshold", () => {
@@ -17,7 +23,7 @@ describe("useScrolled", () => {
 
     const scrollTo = (y: number) =>
       act(() => {
-        Object.defineProperty(window, "scrollY", { value: y, configurable: true });
+        setScrollY(y);
         window.dispatchEvent(new Event("scroll"));
       });
 
@@ -60,17 +66,37 @@ describe("useEscapeKey", () => {
 
 describe("useMediaQuery", () => {
   it("returns whether the query matches", () => {
-    vi.spyOn(window, "matchMedia").mockImplementation(
-      (query) =>
-        ({
-          matches: query === "(min-width: 900px)",
-          media: query,
-          addEventListener: () => {},
-          removeEventListener: () => {},
-        }) as unknown as MediaQueryList,
-    );
+    mockMatchMedia(["(min-width: 900px)"]);
 
     expect(renderHook(() => useMediaQuery("(min-width: 900px)")).result.current).toBe(true);
     expect(renderHook(() => useMediaQuery("(max-width: 400px)")).result.current).toBe(false);
+  });
+
+  it("updates when the query starts or stops matching", () => {
+    const media = mockMatchMedia();
+    const { result } = renderHook(() => useMediaQuery("(min-width: 900px)"));
+    expect(result.current).toBe(false);
+
+    act(() => media.set("(min-width: 900px)", true));
+    expect(result.current).toBe(true);
+
+    act(() => media.set("(min-width: 900px)", false));
+    expect(result.current).toBe(false);
+  });
+
+  it("reads the reduced-motion setting", () => {
+    mockMatchMedia(["(prefers-reduced-motion: reduce)"]);
+    expect(renderHook(() => usePrefersReducedMotion()).result.current).toBe(true);
+  });
+});
+
+describe("static rendering", () => {
+  it("renders browser state as false, so the exported HTML never depends on the browser", () => {
+    mockMatchMedia(["(min-width: 900px)"]);
+    setScrollY(500);
+    const Probe = () => `${useScrolled(0)} ${useMediaQuery("(min-width: 900px)")}`;
+
+    expect(renderToString(createElement(Probe))).toBe("false false");
+    setScrollY(0);
   });
 });

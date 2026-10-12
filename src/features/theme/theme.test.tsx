@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { ThemeScript } from "./components/ThemeScript";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { nextTheme, parseTheme, themeInitScript } from "./lib/theme";
 
@@ -30,6 +31,11 @@ describe("theme helpers", () => {
     localStorage.setItem("theme", "<script>");
     runInitScript();
     expect(document.documentElement).not.toHaveAttribute("data-theme");
+  });
+
+  it("inlines the init script through ThemeScript", () => {
+    const { container } = render(<ThemeScript />);
+    expect(container.querySelector("script")?.textContent).toBe(themeInitScript);
   });
 });
 
