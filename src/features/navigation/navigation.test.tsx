@@ -81,6 +81,14 @@ describe("SiteHeader", () => {
     expect(screen.getByRole("link", { name: "About" })).not.toHaveAttribute("aria-current");
   });
 
+  it("watches a thin band with threshold 0, so tall sections can become current too", () => {
+    renderHeader();
+    const [observer] = MockIntersectionObserver.instances;
+
+    expect(observer.thresholds).toEqual([0]);
+    expect(observer.rootMargin).toBe("-45% 0px -50% 0px");
+  });
+
   it("gets its scrolled style once the page scrolls", () => {
     renderHeader();
     const header = screen.getByRole("banner");

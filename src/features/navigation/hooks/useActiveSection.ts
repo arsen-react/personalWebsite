@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-/** Id of the section currently in view, or null before any section is reached. */
+/** Id of the section crossing a band near the middle of the screen, or null before any. */
 export function useActiveSection(ids: readonly string[]): string | null {
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -13,7 +13,7 @@ export function useActiveSection(ids: readonly string[]): string | null {
           if (entry.isIntersecting) setActiveId(entry.target.id);
         }
       },
-      { threshold: 0.3, rootMargin: "-20% 0px -60% 0px" },
+      { threshold: 0, rootMargin: "-45% 0px -50% 0px" },
     );
     for (const id of ids) {
       const section = document.getElementById(id);
