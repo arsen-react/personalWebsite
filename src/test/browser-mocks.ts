@@ -1,9 +1,5 @@
 import { vi } from "vitest";
 
-/**
- * IntersectionObserver for jsdom, which has none. Tests drive it by hand: `trigger` reports
- * elements entering or leaving the viewport, and `instances` lists every observer created.
- */
 export class MockIntersectionObserver {
   static instances: MockIntersectionObserver[] = [];
 
@@ -46,10 +42,6 @@ export class MockIntersectionObserver {
   }
 }
 
-/**
- * Makes window.matchMedia match exactly the given queries for the current test. `set`
- * flips a query and notifies listeners, like resizing the window or changing an OS setting.
- */
 export function mockMatchMedia(matching: readonly string[] = []) {
   const active = new Set(matching);
   const listeners = new Set<() => void>();

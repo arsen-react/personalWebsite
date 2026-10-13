@@ -10,7 +10,6 @@ import robots from "./robots";
 import sitemap from "./sitemap";
 import { personStructuredData, toJsonScript } from "./structured-data";
 
-// next/font only works inside the Next.js compiler.
 vi.mock("./fonts", () => ({ fontVariables: "font-sans font-serif font-mono" }));
 
 const renderDocument = () =>

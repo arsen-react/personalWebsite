@@ -15,7 +15,6 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**/*.{ts,tsx}"],
-      // fonts.ts only runs inside the Next.js compiler (next/font).
       exclude: [
         "src/**/*.test.{ts,tsx}",
         "src/**/*.stories.tsx",

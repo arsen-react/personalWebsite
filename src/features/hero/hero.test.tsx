@@ -4,7 +4,6 @@ import { mockMatchMedia } from "@/test/browser-mocks";
 import { HeroCanvas } from "./components/HeroCanvas";
 import { NETWORK } from "./lib/nodeNetwork";
 
-/** A 2D context that records what is drawn, and a container of the given size. */
 function mockCanvas(width: number, height: number) {
   const fills: string[] = [];
   const context = {
@@ -72,7 +71,6 @@ describe("HeroCanvas", () => {
   });
 
   it("lights up bright nodes near the pointer until it leaves", () => {
-    // Every node starts bright, at the same point: (720, 540).
     vi.spyOn(Math, "random").mockReturnValue(0.9);
     const { context } = mockCanvas(800, 600);
     const { wrap } = renderCanvas();
