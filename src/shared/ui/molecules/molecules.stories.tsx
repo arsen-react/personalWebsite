@@ -36,7 +36,7 @@ export const Stats: Story = {
   name: "StatCard",
   render: () => (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 240px)", gap: 24 }}>
-      <StatCard value="3+" label="Years Experience" />
+      <StatCard value="4,200+" label="Payment Terminals" />
       <StatCard value="React" label="Core Specialization" />
     </div>
   ),

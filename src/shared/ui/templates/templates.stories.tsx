@@ -17,7 +17,7 @@ const meta = {
         Building systems that <em>scale</em>
       </SectionHeading>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 24 }}>
-        <StatCard value="3+" label="Years Experience" />
+        <StatCard value="4,200+" label="Payment Terminals" />
         <StatCard value="Fintech" label="Industry Focus" />
       </div>
     </Section>
