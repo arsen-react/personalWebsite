@@ -41,8 +41,8 @@ export const projects: Project[] = [
     href: "https://github.com/arsen-react/CryptoLiveDash",
     highlights: [
       "Real-time crypto trading dashboard: live Binance prices and candles over WebSocket, TradingView charts and an order book",
-      "Redux Toolkit and RTK Query state, drag-and-drop widgets and Zod-validated persistence",
-      "83 Vitest and React Testing Library tests, including regression tests for two live-stream bugs",
+      "Redux Toolkit and RTK Query state, drag-and-drop widgets (mouse and keyboard) and Zod-validated persistence",
+      "170+ Vitest and React Testing Library tests with coverage gates in CI, including regression tests for live-stream bugs",
     ],
   },
 ];
